@@ -1,0 +1,72 @@
+/* Sidebar base */
+.sidebar {
+  --sb-bg: #0b1220;
+  --sb-fg: #cbd5e1;
+  --sb-fg-muted: #94a3b8;
+  --sb-active-bg: #1e293b;
+  --sb-active-fg: #ffffff;
+  --sb-hover-bg: #162132;
+  --sb-border: #0f172a;
+
+  background: var(--sb-bg);
+  color: var(--sb-fg);
+}
+
+/* Lista */
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar li { margin: 6px 0; }
+
+/* Links */
+.sidebar a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--sb-fg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color .16s ease, color .16s ease, border-color .16s ease, transform .06s ease;
+}
+
+/* Hover/Focus */
+.sidebar a:hover { background: var(--sb-hover-bg); color: #e5edf7; }
+.sidebar a:focus-visible {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,.35);
+}
+
+/* Active (rota atual) */
+.sidebar a.active {
+  background: var(--sb-active-bg);
+  color: var(--sb-active-fg);
+  border-color: var(--sb-border);
+  font-weight: 600;
+}
+
+/* Pequeno feedback ao clicar */
+.sidebar a:active { transform: translateY(1px); }
+
+/* Título/seção (ex.: 'Admin') */
+.sidebar .sidebar-section-title {
+  margin: 14px 0 8px;
+  padding: 0 2px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--sb-fg-muted);
+  opacity: .9;
+}
+
+/* Suporte leve a tema claro (opcional) */
+@media (prefers-color-scheme: light) {
+  .sidebar {
+    --sb-bg: #f8fafc;
+    --sb-fg: #0f172a;
+    --sb-fg-muted: #475569;
+    --sb-active-bg: #e2e8f0;
+    --sb-active-fg: #0f172a;
+    --sb-hover-bg: #eef2f7;
+    --sb-border: #cbd5e1;
+  }
+}

@@ -1,0 +1,62 @@
+/* Espaço vertical entre as linhas (cards) */
+.aw-table {
+  border-collapse: separate !important;
+  border-spacing: 0 10px !important; /* << gap entre linhas */
+  table-layout: fixed;
+}
+
+/* Cabeçalho mais limpo */
+.aw-table thead th {
+  text-align: left;
+  padding: 8px 12px;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+/* Cada célula vira parte de um "card" */
+.aw-td {
+  background: #0b1220;
+  border: 1px solid #1f2533;
+  padding: 12px 14px;
+  color: #e5edf7;
+}
+
+/* arredondar apenas nos extremos da linha */
+.aw-row .aw-td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.aw-row .aw-td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+.muted { opacity: .7; }
+
+/* célula de usuário */
+.aw-user .name { font-weight: 600; line-height: 1.15; }
+.aw-user .sub  { font-size: 12px; opacity: .75; margin-top: 2px; }
+
+/* PIX + botão copiar */
+.aw-pix { display: flex; align-items: center; gap: 8px; min-width: 220px; }
+.aw-pix .code {
+  display: inline-block; max-width: 100%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  background: #0a0f1c; border: 1px solid #1f2533; color: #cfe2ff;
+  border-radius: 8px; padding: 6px 8px;
+}
+.aw-pix .copy {
+  border: 1px solid #334155; background: #1f2937; color: #e5edf7;
+  padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 12px;
+}
+.aw-pix .copy:hover { background: #2a364b; }
+.aw-pix .copy.ok   { background: #0c6b3c; border-color: #118a50; color: #fff; }
+
+/* Ações */
+.aw-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+.btn { padding: 8px 12px; border-radius: 8px; border: 1px solid transparent; color: #fff; }
+.btn.primary { background: #2456d3; border-color: #2e66f1; }
+.btn.success { background: #12805d; border-color: #14966e; }
+.btn.danger  { background: #b4253a; border-color: #d0354f; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }

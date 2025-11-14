@@ -1,0 +1,17 @@
+.dashboard-container {
+  display: flex;
+}
+
+.dashboard-content {
+  margin-left: 220px;
+  padding: 30px;
+  flex-grow: 1;
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.dashboard-content h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}

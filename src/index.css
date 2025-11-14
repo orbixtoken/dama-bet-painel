@@ -1,0 +1,178 @@
+/* ---------- Base Dark UI ---------- */
+:root{
+  --bg: #0c0f14;
+  --panel: #0f141f;
+  --panel-2: #121722;
+  --border: #1f2533;
+  --text: #eaecef;
+  --muted: #a7b0c0;
+  --accent: #2563eb;
+  --accent-2: #1d4ed8;
+  --danger: #e11d48;
+  --ok: #10b981;
+  --warning: #f59e0b;
+  --input: #0f172a;
+  --input-border: #1e293b;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  /* tamanho base um pouco maior */
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* Links */
+a{ color:#9ec1ff; text-decoration:none }
+a:hover{ text-decoration:underline }
+
+/* Botões e inputs – estilos globais melhores */
+button{
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(37,99,235,.2) inset;
+}
+button[disabled]{ opacity:.6; cursor:not-allowed }
+button.secondary{
+  background: #1f2937;
+  color: var(--text);
+  border: 1px solid #374151;
+  box-shadow: none;
+}
+button.danger{
+  background: var(--danger);
+}
+button.ok{
+  background: var(--ok);
+}
+
+/* Inputs/Selects/Textareas */
+input, select, textarea{
+  width: 100%;
+  background: var(--input);
+  color: var(--text);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  outline: none;
+  font-size: 1rem;
+}
+input::placeholder, textarea::placeholder{ color:#73819b }
+label{ font-size:.95rem; color: var(--muted) }
+
+/* Cards / painéis */
+.card{
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+/* Títulos */
+h1,h2,h3{ margin:0 0 12px }
+h1{ font-size: 1.65rem }
+h2{ font-size: 1.35rem }
+h3{ font-size: 1.15rem }
+
+/* ---------- Admin Shell (alvo principal) ---------- */
+.admin-root{
+  /* aumenta levemente toda a UI do admin */
+  font-size: 1.08rem;
+}
+.admin-root .admin-aside{
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+}
+.admin-root .admin-brand{
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+.admin-root .admin-link{
+  display:block;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+.admin-root .admin-link.active{
+  background: #1a2233;
+  border-color: #2a3650;
+}
+.admin-root .topbar h1{
+  font-size: 1.4rem;
+}
+.admin-root .topbar button{
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+/* ---------- Tabelas admin ---------- */
+.admin-root table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;           /* maior */
+}
+.admin-root thead{
+  background: #0f141f;
+}
+.admin-root th,
+.admin-root td{
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.admin-root th{
+  text-align: left;
+  font-weight: 700;
+  color: #cfd7e6;
+}
+.admin-root tbody tr:hover{
+  background: rgba(42,54,80,.25);
+}
+
+/* ---------- Grids utilitários ---------- */
+.grid{ display:grid; gap:12px }
+.grid-2{ grid-template-columns: repeat(2,minmax(0,1fr)) }
+.grid-3{ grid-template-columns: repeat(3,minmax(0,1fr)) }
+.grid-4{ grid-template-columns: repeat(4,minmax(0,1fr)) }
+
+.row{ display:flex; gap:10px; flex-wrap:wrap }
+.center{ display:flex; align-items:center; justify-content:center }
+
+/* ---------- Badges/Tags ---------- */
+.badge{
+  display:inline-flex; align-items:center; gap:6px;
+  padding: 4px 10px; border-radius: 999px; font-size: .9rem; font-weight: 700;
+  background:#3f3f46; color:#e5e7eb;
+}
+.badge.ok{ background:#065f46; color:#ecfdf5 }
+.badge.info{ background:#1d4ed8; color:#fff }
+.badge.warn{ background:#92400e; color:#ffedd5 }
+.badge.danger{ background:#7f1d1d; color:#fee2e2 }
+
+/* ---------- Paginador ---------- */
+.pager{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 12px; background: #0f141f; border-top: 1px solid var(--border)
+}
+.pager .info{ opacity:.85 }
+.pager button{ background:#1f2937; border:1px solid #374151 }
+
+/* ---------- Responsivo ---------- */
+@media (min-width: 1440px){
+  body{ font-size: 18px }
+  .admin-root{ font-size: 1.1rem }
+}

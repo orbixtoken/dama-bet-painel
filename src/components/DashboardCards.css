@@ -1,0 +1,41 @@
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.card {
+  background: #0f141f;
+  border: 1px solid #1f2533;
+  border-radius: 12px;
+  padding: 14px;
+  color: #e5e7eb;
+}
+.card h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  opacity: .9;
+}
+.card p {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+.card.error {
+  border-color: #7f1d1d;
+  background: #111827;
+}

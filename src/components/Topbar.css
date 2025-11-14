@@ -1,0 +1,30 @@
+/* src/components/Topbar.css */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0f141f;
+  border-bottom: 1px solid #1f2533;
+  color: #e5e7eb;
+  padding: 10px 14px;
+}
+.topbar-left p { margin: 0; }
+.topbar .role { opacity: .8; font-size: 12px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.env-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #1a2233;
+  border: 1px solid #2a3650;
+  opacity: .9;
+}
+.btn-logout {
+  background: #1f2937;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.btn-logout:hover { background: #243041; }

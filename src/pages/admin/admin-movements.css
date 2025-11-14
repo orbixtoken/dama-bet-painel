@@ -1,0 +1,35 @@
+.am-wrap{--panel:#0f141f;--line:#1f2533;--muted:#aab3c5;color:#eaecef}
+.am-head h1{margin:0 0 4px;font-size:22px}
+.am-sub{opacity:.8;margin-bottom:10px}
+.am-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:8px 0 6px}
+.am-kpi{background:#0e1422;border:1px solid #1f2533;border-radius:12px;padding:12px}
+.am-kpi-label{font-size:12px;opacity:.8}
+.am-kpi-value{font-size:20px;font-weight:800;margin-top:4px}
+.am-green{background:#0f2a1d;border-color:#14532d}
+.am-red{background:#2a0f10;border-color:#7f1d1d}
+.am-blue{background:#0e1422;border-color:#1f2533}
+.am-note{font-size:12px;opacity:.7;margin-bottom:10px}
+
+.am-filters{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.am-input{background:#0c1220;border:1px solid #253047;border-radius:8px;padding:8px 10px;color:#eaecef}
+.am-btn{background:#2563eb;border:0;color:#fff;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer}
+.am-btn-ghost{background:#101624;border:1px solid #2a3650;color:#eaecef;border-radius:8px;padding:8px 12px;cursor:pointer}
+.am-error{background:#2a0f10;border:1px solid #7f1d1d;color:#fecaca;border-radius:8px;padding:8px 10px;margin-bottom:10px}
+
+.am-table-wrap{border:1px solid var(--line);background:var(--panel);border-radius:12px;overflow-x:auto}
+.am-table{width:100%;border-collapse:collapse;font-size:14px}
+.am-table th,.am-table td{padding:10px;border-top:1px solid #1f2533}
+.am-table thead th{position:sticky;top:0;background:#0f141fcc;backdrop-filter:blur(6px);font-weight:700}
+.am-right{text-align:right}
+.am-nowrap{white-space:nowrap}
+.am-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
+.am-col-desc{max-width:520px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.am-muted{opacity:.75;padding:16px;text-align:center}
+
+.am-chip{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid; font-size:12px;font-weight:700;text-transform:capitalize}
+
+.am-pos{color:#86efac}
+.am-neg{color:#fca5a5}
+
+.am-pager{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.am-pager-actions{display:flex;gap:8px;align-items:center}
