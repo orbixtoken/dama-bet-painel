@@ -52,7 +52,7 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <h2>Dama Bet</h2>
+      <h2>Tiger 67</h2>
 
       <nav>
         <ul>{userItems.map(renderItem)}</ul>

@@ -146,7 +146,7 @@ export default function AdminShell() {
     <div style={s.wrap}>
       <aside style={s.aside}>
         <div style={s.brandRow}>
-          <div style={s.brand}>Dama Bet • Admin</div>
+          <div style={s.brand}>Tiger 67 • Admin</div>
           <div style={s.envBadge}>{env}</div>
         </div>
 

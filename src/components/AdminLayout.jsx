@@ -33,7 +33,7 @@ export default function AdminLayout() {
           background: '#0b1324',
         }}
       >
-        <div style={{ margin: '6px 0 16px', fontWeight: 600 }}>Dama Bet • Admin</div>
+        <div style={{ margin: '6px 0 16px', fontWeight: 600 }}>Tiger 67 • Admin</div>
 
         {/* GERAL */}
         <div style={{ marginTop: 8, opacity: 0.65, fontSize: 12 }}>Geral</div>

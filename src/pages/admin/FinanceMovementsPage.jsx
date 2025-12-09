@@ -21,7 +21,7 @@ function toIso(v) {
 
 // Tipos que afetam o CAIXA da empresa:
 const ENTRADA_TYPES = new Set(["deposito", "credito", "deposito_aprovado"]);
-const SAIDA_TYPES   = new Set(["pagamento_saque", "saque_pago", "saque"]);
+const SAIDA_TYPES = new Set(["pagamento_saque", "saque_pago", "saque"]);
 
 export default function AdminMovementsPage() {
   const [rows, setRows] = useState([]);
@@ -47,7 +47,13 @@ export default function AdminMovementsPage() {
   // paginação (servidor)
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
-  const pages = Math.max(1, Math.ceil(Number(total || 0) / Number(pageSize || 1)));
+  const pages = Math.max(
+    1,
+    Math.ceil(Number(total || 0) / Number(pageSize || 1))
+  );
+
+  // estado para limpar movimentos
+  const [loadingClear, setLoadingClear] = useState(false);
 
   // --- tabela paginada ---
   async function loadTable() {
@@ -71,7 +77,12 @@ export default function AdminMovementsPage() {
         id: r.id ?? idx,
         quando: r.created_at ?? r.criado_em ?? null,
         usuario:
-          r.nome_usuario || r.usuario || r.login || r.email || r.usuario_id || "—",
+          r.nome_usuario ||
+          r.usuario ||
+          r.login ||
+          r.email ||
+          r.usuario_id ||
+          "—",
         tipo: String(r.tipo || "").toLowerCase(),
         descricao: r.descricao || "",
         antes: Number(r.saldo_antes ?? r.antes ?? 0),
@@ -111,9 +122,10 @@ export default function AdminMovementsPage() {
       for (const r of list) {
         const t = String(r.tipo || "").toLowerCase();
         const val = Number(r.valor ?? 0);
-        const antes  = Number(r.saldo_antes ?? r.antes ?? 0);
+        const antes = Number(r.saldo_antes ?? r.antes ?? 0);
         const depois = Number(r.saldo_depois ?? r.depois ?? 0);
-        const delta  = Number.isFinite(antes) && Number.isFinite(depois) ? (depois - antes) : 0;
+        const delta =
+          Number.isFinite(antes) && Number.isFinite(depois) ? depois - antes : 0;
 
         if (ENTRADA_TYPES.has(t)) {
           // usa valor, senão cai no delta positivo
@@ -131,6 +143,59 @@ export default function AdminMovementsPage() {
       setKpi({ entradas: 0, saidas: 0, resultado: 0, saldoCaixa: 0 });
     } finally {
       setLoadingKpi(false);
+    }
+  }
+
+  // função para limpar efetivamente movimentos (chama backend)
+  async function clearMovements() {
+    // confirmação explícita — evitar clique acidental
+    const anyFilter =
+      (qUser && qUser.trim() !== "") ||
+      (tipo && tipo.trim() !== "") ||
+      (from && from.trim() !== "") ||
+      (to && to.trim() !== "");
+    const msg = anyFilter
+      ? "Você tem certeza? Isso irá remover os movimentos filtrados permanentemente."
+      : "Você tem certeza? Isso irá remover TODOS os movimentos permanentemente.";
+    // usa confirm nativo — se tiver modal customizado, pode substituir
+    if (!window.confirm(msg + "\n\nEsta ação não pode ser desfeita.")) return;
+
+    setLoadingClear(true);
+    setErro("");
+    try {
+      const payload = {
+        q: qUser || undefined,
+        tipo: tipo || undefined,
+        from: toIso(from),
+        to: toIso(to),
+      };
+      // chamamos o endpoint do admin para limpar movimentos.
+      // Ajuste o nome do método se seu api usar outro (ex: deleteMovimentos).
+      if (!adminFinanceApi.clearMovimentos) {
+        throw new Error(
+          "Método adminFinanceApi.clearMovimentos não encontrado. Ajuste o nome do método na API."
+        );
+      }
+      await adminFinanceApi.clearMovimentos(payload);
+
+      // sucesso — recarrega tudo e mostra feedback simples
+      setErro("");
+      await loadTable();
+      await loadKpis();
+      // se quiser, atualize total/rows forçadamente:
+      setTotal(0);
+      setRows([]);
+      // mensagem de sucesso temporária (pode trocar por toast)
+      setErro("Movimentações removidas com sucesso.");
+      setTimeout(() => setErro(""), 3500);
+    } catch (e) {
+      setErro(
+        e?.response?.data?.erro ||
+          e?.message ||
+          "Falha ao tentar limpar movimentos. Verifique logs do servidor."
+      );
+    } finally {
+      setLoadingClear(false);
     }
   }
 
@@ -219,11 +284,40 @@ export default function AdminMovementsPage() {
           onChange={(e) => setTo(e.target.value)}
           title="Até"
         />
-        <button className="am-btn" onClick={() => { loadTable(); loadKpis(); }} disabled={loading || loadingKpi}>
+        <button
+          className="am-btn"
+          onClick={() => {
+            loadTable();
+            loadKpis();
+          }}
+          disabled={loading || loadingKpi || loadingClear}
+        >
           {loading || loadingKpi ? "Atualizando…" : "Atualizar"}
         </button>
-        <button className="am-btn-ghost" onClick={clearFilters} disabled={loading || loadingKpi}>
+
+        <button
+          className="am-btn-ghost"
+          onClick={clearFilters}
+          disabled={loading || loadingKpi || loadingClear}
+        >
           Limpar
+        </button>
+
+        {/* Botão de limpar movimentos (permanente) */}
+        <button
+          className="am-btn"
+          onClick={clearMovements}
+          disabled={loading || loadingKpi || loadingClear}
+          style={{
+            marginLeft: 8,
+            background: loadingClear ? "linear-gradient(180deg,#facc15,#f97316)" : "linear-gradient(180deg,#ef4444,#dc2626)",
+            border: "1px solid rgba(0,0,0,.12)",
+            color: "#fff",
+            fontWeight: 800,
+          }}
+          title="Remover movimentos (respeita filtros atuais). Ação irreversível."
+        >
+          {loadingClear ? "Limpando…" : "Limpar Movimentos"}
         </button>
       </div>
 
@@ -321,10 +415,10 @@ function TipoChip({ tipo }) {
   const t = String(tipo || "").toLowerCase();
   const map = {
     deposito: { bg: "#0f2a1d", bd: "#14532d", fg: "#86efac", txt: "depósito" },
-    credito:  { bg: "#0f2a1d", bd: "#14532d", fg: "#86efac", txt: "crédito" },
-    saque:    { bg: "#22111f", bd: "#a21caf", fg: "#f0abfc", txt: "saque" },
+    credito: { bg: "#0f2a1d", bd: "#14532d", fg: "#86efac", txt: "crédito" },
+    saque: { bg: "#22111f", bd: "#a21caf", fg: "#f0abfc", txt: "saque" },
     pagamento_saque: { bg: "#211e0e", bd: "#a16207", fg: "#facc15", txt: "pagto saque" },
-    aposta:   { bg: "#2a0f10", bd: "#7f1d1d", fg: "#fca5a5", txt: "aposta" },
+    aposta: { bg: "#2a0f10", bd: "#7f1d1d", fg: "#fca5a5", txt: "aposta" },
   };
   const s = map[t] || { bg: "#141923", bd: "#334155", fg: "#cbd5e1", txt: t || "—" };
   return (
