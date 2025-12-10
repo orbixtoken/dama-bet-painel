@@ -5,7 +5,7 @@ import './Topbar.css';
 
 // Opcional via .env
 const BRAND_LOGO = import.meta.env.VITE_APP_LOGO_URL || null;      // ex.: /logo-damabet.png
-const APP_NAME   = import.meta.env.VITE_APP_NAME || 'Dama Bet';
+const APP_NAME   = import.meta.env.VITE_APP_NAME || 'Tiger 67';
 
 function initialsOf(name = '') {
   const s = String(name || '').trim();
