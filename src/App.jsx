@@ -10,7 +10,8 @@ import AdminUsersPage from './pages/admin/AdminUsersPage';
 import AdminWithdrawalsPage from './pages/admin/AdminWithdrawalsPage';
 import CasinoGamesConfigPage from './pages/admin/CasinoGamesConfigPage';
 import DepositosPage from './pages/admin/DepositosPage';
-import FinanceMovementsPage from './pages/admin/FinanceMovementsPage';
+import FinanceMovementsPage from './pages/admin/AdminMovementsPage';
+import AdminMovementsPage from './pages/admin/AdminMovementsPage';
 
 /** Guard: exige ADMIN/MASTER (lê várias formas de campo de função) */
 function RequireAdmin({ children }) {
@@ -59,7 +60,7 @@ export default function AppRoutes() {
         <Route index element={<OverviewPage />} />
 
         {/* IMPORTANTE: caminho RELATIVO (sem /) para renderizar dentro do AdminShell */}
-        <Route path="movimentos" element={<FinanceMovementsPage />} />
+        <Route path="movimentos" element={<AdminMovementsPage />} />
 
         {/* /admin/usuarios */}
         <Route path="usuarios" element={<AdminUsersPage />} />

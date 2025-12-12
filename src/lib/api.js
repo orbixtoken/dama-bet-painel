@@ -161,10 +161,16 @@ export const adminUsersApi = {
 };
 
 /* ----------------- Admin: Financeiro (Geral) ------------------- */
+/* ----------------- Admin: Financeiro (Geral) ------------------- */
 export const adminFinanceApi = {
   listMovimentos: (params = {}) =>
     http.get(`${PREFIX}/admin/financeiro/movimentos`, { params }),
+
+  // novo: limpar movimentos (POST com filtros)
+  clearMovimentos: (filters = {}) =>
+    http.post(`${PREFIX}/admin/financeiro/movimentos/clear`, filters),
 };
+
 
 /* ---------------- FINANCEIRO (usuário/site) ----------------- */
 export const financeiroApi = {

@@ -147,17 +147,16 @@ export default function AdminMovementsPage() {
   }
 
   // função para limpar efetivamente movimentos (chama backend)
+    // função para limpar efetivamente movimentos (chama backend)
   async function clearMovements() {
-    // confirmação explícita — evitar clique acidental
     const anyFilter =
       (qUser && qUser.trim() !== "") ||
       (tipo && tipo.trim() !== "") ||
       (from && from.trim() !== "") ||
       (to && to.trim() !== "");
     const msg = anyFilter
-      ? "Você tem certeza? Isso irá remover os movimentos filtrados permanentemente."
-      : "Você tem certeza? Isso irá remover TODOS os movimentos permanentemente.";
-    // usa confirm nativo — se tiver modal customizado, pode substituir
+      ? "Você tem certeza? Isso irá REMOVER os movimentos filtrados permanentemente."
+      : "Você tem certeza? Isso irá REMOVER TODOS os movimentos permanentemente.";
     if (!window.confirm(msg + "\n\nEsta ação não pode ser desfeita.")) return;
 
     setLoadingClear(true);
@@ -169,28 +168,28 @@ export default function AdminMovementsPage() {
         from: toIso(from),
         to: toIso(to),
       };
-      // chamamos o endpoint do admin para limpar movimentos.
-      // Ajuste o nome do método se seu api usar outro (ex: deleteMovimentos).
+
       if (!adminFinanceApi.clearMovimentos) {
         throw new Error(
-          "Método adminFinanceApi.clearMovimentos não encontrado. Ajuste o nome do método na API."
+          "Método adminFinanceApi.clearMovimentos não encontrado. Atualize src/lib/api.js"
         );
       }
-      await adminFinanceApi.clearMovimentos(payload);
 
-      // sucesso — recarrega tudo e mostra feedback simples
-      setErro("");
+      const { data } = await adminFinanceApi.clearMovimentos(payload);
+      // backend deve retornar { removedCount: N } ou similar
+      const removedCount = data?.removedCount ?? data?.removed ?? 0;
+
+      // recarrega dados e kpis
       await loadTable();
       await loadKpis();
-      // se quiser, atualize total/rows forçadamente:
-      setTotal(0);
-      setRows([]);
-      // mensagem de sucesso temporária (pode trocar por toast)
-      setErro("Movimentações removidas com sucesso.");
+
+      setErro(""); // limpar mensagens de erro
+      setErro(`${removedCount} movimentação(ões) removida(s) com sucesso.`);
       setTimeout(() => setErro(""), 3500);
     } catch (e) {
       setErro(
         e?.response?.data?.erro ||
+          e?.response?.data?.message ||
           e?.message ||
           "Falha ao tentar limpar movimentos. Verifique logs do servidor."
       );
@@ -198,6 +197,7 @@ export default function AdminMovementsPage() {
       setLoadingClear(false);
     }
   }
+
 
   // quando filtros mudam, volta para página 1 e recarrega tudo
   useEffect(() => {
