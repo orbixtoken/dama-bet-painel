@@ -34,7 +34,7 @@ function getToken() {
     null
   );
 }
-
+//lua
 function clearAuth() {
   localStorage.removeItem('token');
   localStorage.removeItem('accessToken');
